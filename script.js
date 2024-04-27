@@ -54,15 +54,23 @@ for (let button of buttons) {
     } else if (operators.includes(button.textContent)) {
       operation.push(displayValue.textContent);
       operation.push(button.textContent);
+      console.log(operation);
     } else if (button.textContent === "=") {
       if (operation.length !== 0 && operation[0] !== "operation complete") {
         operation.push(displayValue.textContent);
         displayValue.textContent = operate(operation[1], operation[0], operation[2]);
+        console.log(operation);
         operation = ["operation complete"];
       }
     } else {
       displayValue.textContent = "0";
       operation = [];
     }
+    if (operation.length > 2) {
+      displayValue.textContent = operate(operation[1], operation[0], operation[2]);
+      operation.splice(0, 3, displayValue.textContent);
+    }
   })
 }
+
+// fix the repeating decimal - don't round up
