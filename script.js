@@ -49,7 +49,9 @@ for (let button of buttons) {
           operation = [];
         }
       } else {
-        displayValue.textContent += button.textContent;
+        if (displayValue.textContent.length < 9) {
+          displayValue.textContent += button.textContent;
+        }
       }
     } else if (operators.includes(button.textContent)) {
       if (operation[0] === "operation complete") {
