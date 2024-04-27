@@ -28,3 +28,16 @@ function operate(operator, num1, num2) {
     return divide(num1, num2);
   }
 }
+
+buttons = document.querySelectorAll("button");
+display = document.querySelector("#display");
+let displayValue = "";
+for (let button of buttons) {
+  button.addEventListener("click", () => {
+    if ("1234567890".includes(button.textContent)) {
+      displayValue = document.createElement("span");
+      displayValue.textContent = button.textContent;
+      display.appendChild(displayValue);
+    }
+  });
+}
