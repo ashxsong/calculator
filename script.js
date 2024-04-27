@@ -52,6 +52,9 @@ for (let button of buttons) {
         displayValue.textContent += button.textContent;
       }
     } else if (operators.includes(button.textContent)) {
+      if (operation[0] === "operation complete") {
+        operation.shift()
+      }
       operation.push(displayValue.textContent);
       operation.push(button.textContent);
       console.log(operation);
