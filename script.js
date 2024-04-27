@@ -33,6 +33,7 @@ let buttons = document.querySelectorAll("button");
 let display = document.querySelector("#display");
 let displayValue = document.createElement("span");
 let operation = [];
+let isComplete = true;
 
 const numbers = "1234567890";
 const operators = "+-*/";
@@ -43,17 +44,19 @@ display.appendChild(displayValue);
 for (let button of buttons) {
   button.addEventListener("click", () => {
     if (numbers.includes(button.textContent)) {
-      if (displayValue.textContent === "0" || operation.length !== 0) {
+      if ((displayValue.textContent === "0" || operation.length !== 0) && isComplete) {
         displayValue.textContent = button.textContent;
         if (operation[0] === "operation complete") {
           operation = [];
         }
+        isComplete = false;
       } else {
         if (displayValue.textContent.length < 9) {
           displayValue.textContent += button.textContent;
         }
       }
     } else if (operators.includes(button.textContent)) {
+      isComplete = true;
       if (operation[0] === "operation complete") {
         operation.shift()
       }
@@ -61,6 +64,7 @@ for (let button of buttons) {
       operation.push(button.textContent);
       console.log(operation);
     } else if (button.textContent === "=") {
+      isComplete = true;
       if (operation.length !== 0 && operation[0] !== "operation complete") {
         operation.push(displayValue.textContent);
         displayValue.textContent = operate(operation[1], operation[0], operation[2]);
@@ -68,6 +72,7 @@ for (let button of buttons) {
         operation = ["operation complete"];
       }
     } else {
+      isComplete = true;
       displayValue.textContent = "0";
       operation = [];
     }
