@@ -51,15 +51,20 @@ for (let button of buttons) {
       } else {
         displayValue.textContent += button.textContent;
       }
-      display.appendChild(displayValue);
     } else if (operators.includes(button.textContent)) {
       operation.push(displayValue.textContent);
       operation.push(button.textContent);
     } else if (button.textContent === "=") {
-      operation.push(displayValue.textContent);
-      displayValue.textContent = operate(operation[1], operation[0], operation[2]);
-      display.appendChild(displayValue);
-      operation = ["operation complete"];
+      if (operation.length !== 0 && operation[0] !== "operation complete") {
+        operation.push(displayValue.textContent);
+        displayValue.textContent = operate(operation[1], operation[0], operation[2]);
+        operation = ["operation complete"];
+      } else {
+        displayValue.textContent = "0";
+      }
+    } else {
+      displayValue.textContent = "0";
+      operation = [];
     }
   })
 }
