@@ -49,7 +49,9 @@ for (let button of buttons) {
         if (operation[0] === "operation complete") {
           operation = [];
         }
-        isComplete = false;
+        if (displayValue.textContent !== "0") {
+          isComplete = false;
+        }
       } else {
         if (displayValue.textContent.length < 9) {
           displayValue.textContent += button.textContent;
