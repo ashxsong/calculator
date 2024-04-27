@@ -11,7 +11,7 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
-  return num1 / num2;
+  return Math.round((num1 / num2) * 1e7) / 1e7;
 }
 
 function operate(operator, num1, num2) {
