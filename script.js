@@ -14,7 +14,7 @@ function divide(num1, num2) {
   if (parseFloat(num2) === 0) {
     return "Error";
   }
-  return Math.round((num1 / num2) * 1e7) / 1e7;
+  return Math.trunc((num1 / num2) * 1e7) / 1e7;
 }
 
 function operate(operator, num1, num2) {
@@ -72,5 +72,3 @@ for (let button of buttons) {
     }
   })
 }
-
-// fix the repeating decimal - don't round up
