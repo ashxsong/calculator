@@ -78,12 +78,19 @@ for (let button of buttons) {
         console.log(operation);
         operation = ["operation complete"];
       }
+    } else if (button.textContent === "B") {
+      if (displayValue.textContent.length === 1) {
+        displayValue.textContent = "0";
+        isComplete = true;
+      } else {
+        displayValue.textContent = displayValue.textContent.substring(0, displayValue.textContent.length - 1);
+      }
     } else {
       isComplete = true;
       displayValue.textContent = "0";
       operation = [];
     }
-    if (operation.length > 2) {
+    if (operation.length > 3) {
       displayValue.textContent = operate(operation[1], operation[0], operation[2]);
       operation.splice(0, 3, displayValue.textContent);
     }
