@@ -17,14 +17,11 @@ function divide(num1, num2) {
 function operate(operator, num1, num2) {
   if (operator === "+") {
     return add(num1, num2);
-  }
-  if (operator === "-") {
+  } else if (operator === "-") {
     return subtract(num1, num2);
-  }
-  if (operator === "*") {
+  } else if (operator === "*") {
     return multiply(num1, num2);
-  }
-  if (operator === "/") {
+  } else {
     return divide(num1, num2);
   }
 }
