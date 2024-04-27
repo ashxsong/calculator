@@ -35,7 +35,7 @@ let displayValue = document.createElement("span");
 let operation = [];
 let isComplete = true;
 
-const numbers = "1234567890";
+const numbers = "1234567890.";
 const operators = "+-*/";
 
 displayValue.textContent = "0";
@@ -44,7 +44,10 @@ display.appendChild(displayValue);
 for (let button of buttons) {
   button.addEventListener("click", () => {
     if (numbers.includes(button.textContent)) {
-      if ((displayValue.textContent === "0" || operation.length !== 0) && isComplete) {
+      if (button.textContent === "." && displayValue.textContent === "0") {
+        displayValue.textContent = "0.";
+        isComplete = false;
+      } else if ((displayValue.textContent === "0" || operation.length !== 0) && isComplete) {
         displayValue.textContent = button.textContent;
         if (operation[0] === "operation complete") {
           operation = [];
@@ -54,7 +57,9 @@ for (let button of buttons) {
         }
       } else {
         if (displayValue.textContent.length < 9) {
-          displayValue.textContent += button.textContent;
+          if (button.textContent !== "." || !(displayValue.textContent.includes("."))) {
+            displayValue.textContent += button.textContent;
+          }
         }
       }
     } else if (operators.includes(button.textContent)) {
