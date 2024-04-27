@@ -31,32 +31,22 @@ function operate(operator, num1, num2) {
 
 let buttons = document.querySelectorAll("button");
 let display = document.querySelector("#display");
-let arr = [];
-let displayValue = "";
+let displayValue = document.createElement("span");
+
+const numbers = "1234567890";
+
+displayValue.textContent = "0";
+display.appendChild(displayValue);
+
 for (let button of buttons) {
   button.addEventListener("click", () => {
-    if ("1234567890".includes(button.textContent)) {
-      displayValue = document.createElement("span");
-      displayValue.textContent = button.textContent;
-      display.appendChild(displayValue);
-    }
-    if ("1234567890+-*/".includes(button.textContent)) {
-      arr.push(button.textContent);
-    }
-    else if (button.textContent === "AC") {
-      let spans = document.querySelectorAll("span");
-      for (let span of spans) {
-        span.remove();
+    if (numbers.includes(button.textContent)) {
+      if (displayValue.textContent === "0") {
+        displayValue.textContent = button.textContent;
+      } else {
+        displayValue.textContent += button.textContent;
       }
-    }
-    else {
-      let num1 = arr[0];
-      let operator = arr[1];
-      let num2 = arr[2];
-      displayValue = document.createElement("span");
-      displayValue.textContent = operate(operator, num1, num2);
       display.appendChild(displayValue);
-      arr = [];
     }
-  });
+  })
 }
