@@ -59,8 +59,6 @@ for (let button of buttons) {
         operation.push(displayValue.textContent);
         displayValue.textContent = operate(operation[1], operation[0], operation[2]);
         operation = ["operation complete"];
-      } else {
-        displayValue.textContent = "0";
       }
     } else {
       displayValue.textContent = "0";
