@@ -11,6 +11,9 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
+  if (parseFloat(num2) === 0) {
+    return "Error";
+  }
   return Math.round((num1 / num2) * 1e7) / 1e7;
 }
 
