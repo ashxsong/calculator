@@ -33,7 +33,10 @@ let buttons = document.querySelectorAll("button");
 let display = document.querySelector("#display");
 let displayValue = document.createElement("span");
 let operation = [];
-let isComplete = true;
+let isOperandComplete = true;
+let operator;
+let num1;
+let num2;
 
 const numbers = "1234567890.";
 const operators = "+-*/";
@@ -46,14 +49,14 @@ for (let button of buttons) {
     if (numbers.includes(button.textContent)) {
       if (button.textContent === "." && displayValue.textContent === "0") {
         displayValue.textContent = "0.";
-        isComplete = false;
-      } else if ((displayValue.textContent === "0" || operation.length !== 0) && isComplete) {
+        isOperandComplete = false;
+      } else if ((displayValue.textContent === "0" || operation.length !== 0) && isOperandComplete) {
         displayValue.textContent = button.textContent;
         if (operation[0] === "operation complete") {
           operation = [];
         }
         if (displayValue.textContent !== "0") {
-          isComplete = false;
+          isOperandComplete = false;
         }
       } else {
         if (displayValue.textContent.length < 9) {
@@ -63,35 +66,39 @@ for (let button of buttons) {
         }
       }
     } else if (operators.includes(button.textContent)) {
-      isComplete = true;
+      isOperandComplete = true;
       if (operation[0] === "operation complete") {
         operation.shift()
       }
       operation.push(displayValue.textContent);
       operation.push(button.textContent);
-      console.log(operation);
     } else if (button.textContent === "=") {
-      isComplete = true;
+      isOperandComplete = true;
       if (operation.length !== 0 && operation[0] !== "operation complete") {
         operation.push(displayValue.textContent);
-        displayValue.textContent = operate(operation[1], operation[0], operation[2]);
-        console.log(operation);
+        operator = operation[1];
+        num1 = operation[0];
+        num2 = operation[2];
+        displayValue.textContent = operate(operator, num1, num2);
         operation = ["operation complete"];
       }
     } else if (button.textContent === "B") {
       if (displayValue.textContent.length === 1) {
         displayValue.textContent = "0";
-        isComplete = true;
+        isOperandComplete = true;
       } else {
         displayValue.textContent = displayValue.textContent.substring(0, displayValue.textContent.length - 1);
       }
     } else {
-      isComplete = true;
+      isOperandComplete = true;
       displayValue.textContent = "0";
       operation = [];
     }
     if (operation.length > 3) {
-      displayValue.textContent = operate(operation[1], operation[0], operation[2]);
+      operator = operation[1];
+      num1 = operation[0];
+      num2 = operation[2];
+      displayValue.textContent = operate(operator, num1, num2);
       operation.splice(0, 3, displayValue.textContent);
     }
   })
