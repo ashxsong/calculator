@@ -1,20 +1,25 @@
 function add(num1, num2) {
-  return Math.round((parseFloat(num1) + parseFloat(num2)) * 1e12) / 1e12;
+  let sum = Math.round((parseFloat(num1) + parseFloat(num2)) * 1e7) / 1e7;
+  return (sum < 1e8) ? sum : "Error";
 }
 
 function subtract(num1, num2) {
-  return Math.round((num1 - num2) * 1e12) / 1e12;
+  let diff = Math.round((num1 - num2) * 1e7) / 1e7
+  return (diff < 1e8) ? diff : "Error";
 }
 
 function multiply(num1, num2) {
-  return Math.round(num1 * num2 * 1e12) / 1e12;
+  let prod = Math.round(num1 * num2 * 1e7) / 1e7
+  return (prod < 1e8) ? prod : "Error";
 }
 
 function divide(num1, num2) {
   if (parseFloat(num2) === 0) {
     return "Error";
+  } else {
+    let quotient = Math.trunc((num1 / num2) * 1e7) / 1e7;
+    return (quotient < 1e8) ? quotient : "Error";
   }
-  return Math.trunc((num1 / num2) * 1e7) / 1e7;
 }
 
 function operate(operator, num1, num2) {
@@ -101,5 +106,67 @@ for (let button of buttons) {
       displayValue.textContent = operate(operator, num1, num2);
       operation.splice(0, 3, displayValue.textContent);
     }
-  })
+  });
 }
+
+document.addEventListener("keydown", function(event) {
+  if (numbers.includes(event.key)) {
+    if (event.key === "." && displayValue.textContent === "0") {
+      displayValue.textContent = "0.";
+      isOperandComplete = false;
+    } else if ((displayValue.textContent === "0" || operation.length !== 0) && isOperandComplete) {
+      displayValue.textContent = event.key;
+      if (operation[0] === "operation complete") {
+        operation = [];
+      }
+      if (displayValue.textContent !== "0") {
+        isOperandComplete = false;
+      }
+    } else {
+      if (displayValue.textContent.length < 9) {
+        if (event.key !== "." || !(displayValue.textContent.includes("."))) {
+          displayValue.textContent += event.key;
+        }
+      }
+    }
+  }
+  if(operators.includes(event.key)) {
+    isOperandComplete = true;
+    if (operation[0] === "operation complete") {
+      operation.shift()
+    }
+    operation.push(displayValue.textContent);
+    operation.push(event.key);
+  }
+  if (event.key === "=" || event.key === "Enter") {
+    isOperandComplete = true;
+    if (operation.length !== 0 && operation[0] !== "operation complete") {
+      operation.push(displayValue.textContent);
+      operator = operation[1];
+      num1 = operation[0];
+      num2 = operation[2];
+      displayValue.textContent = operate(operator, num1, num2);
+      operation = ["operation complete"];
+    }
+  }
+  if (event.key === "B" || event.key === "Backspace" || event.key === "b") {
+    if (displayValue.textContent.length === 1) {
+      displayValue.textContent = "0";
+      isOperandComplete = true;
+    } else {
+      displayValue.textContent = displayValue.textContent.substring(0, displayValue.textContent.length - 1);
+    }
+  }
+  if (event.key === "A" || event.key === "C" || event.key === "a" || event.key === "c") {
+    isOperandComplete = true;
+    displayValue.textContent = "0";
+    operation = [];
+  }
+  if (operation.length > 3) {
+    operator = operation[1];
+    num1 = operation[0];
+    num2 = operation[2];
+    displayValue.textContent = operate(operator, num1, num2);
+    operation.splice(0, 3, displayValue.textContent);
+  }
+});
