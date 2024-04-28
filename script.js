@@ -1,16 +1,25 @@
 function add(num1, num2) {
-  let sum = Math.round((parseFloat(num1) + parseFloat(num2)) * 1e7) / 1e7;
-  return (sum < 1e8) ? sum : "Error";
+  let sum = Math.round((parseFloat(num1) + parseFloat(num2)) * 1e12) / 1e12;
+  if (String(sum).includes(".") && Math.abs(sum) < 1e9 && -1 * Math.abs(sum) > -1e8) {
+    sum = parseFloat(String(sum).substring(0, 9));
+  }
+  return (Math.abs(sum) < 1e9 && -1 * Math.abs(sum) > -1e8) ? sum : "Error";
 }
 
 function subtract(num1, num2) {
-  let diff = Math.round((num1 - num2) * 1e7) / 1e7
-  return (diff < 1e8) ? diff : "Error";
+  let diff = Math.round((num1 - num2) * 1e12) / 1e12;
+  if (String(diff).includes(".") && Math.abs(diff) < 1e9 && -1 * Math.abs(diff) > -1e8) {
+    diff = parseFloat(String(diff).substring(0, 9));
+  }
+  return (Math.abs(diff) < 1e9 && -1 * Math.abs(diff) > -1e8) ? diff : "Error";
 }
 
 function multiply(num1, num2) {
-  let prod = Math.round(num1 * num2 * 1e7) / 1e7
-  return (prod < 1e8) ? prod : "Error";
+  let prod = Math.round(num1 * num2 * 1e12) / 1e12;
+  if (String(prod).includes(".") && Math.abs(prod) < 1e9 && -1 * Math.abs(prod) > -1e8) {
+    prod = parseFloat(String(prod).substring(0, 9));
+  }
+  return (Math.abs(prod) < 1e9 && -1 * Math.abs(prod) > -1e8) ? prod : "Error";
 }
 
 function divide(num1, num2) {
@@ -18,7 +27,10 @@ function divide(num1, num2) {
     return "Error";
   } else {
     let quotient = Math.trunc((num1 / num2) * 1e7) / 1e7;
-    return (quotient < 1e8) ? quotient : "Error";
+    if (String(quotient).includes(".") && Math.abs(quotient) < 1e9 && -1 * Math.abs(quotient) > -1e8) {
+      quotient = parseFloat(String(quotient).substring(0, 9));
+    }
+    return (Math.abs(quotient) < 1e9 && -1 * Math.abs(quotient) > -1e8) ? quotient : "Error";
   }
 }
 
