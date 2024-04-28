@@ -1,13 +1,13 @@
 function add(num1, num2) {
-  return parseFloat(num1) + parseFloat(num2);
+  return Math.round((parseFloat(num1) + parseFloat(num2)) * 1e12) / 1e12;
 }
 
 function subtract(num1, num2) {
-  return num1 - num2;
+  return Math.round((num1 - num2) * 1e12) / 1e12;
 }
 
 function multiply(num1, num2) {
-  return num1 * num2;
+  return Math.round(num1 * num2 * 1e12) / 1e12;
 }
 
 function divide(num1, num2) {
